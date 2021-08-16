@@ -1,4 +1,4 @@
-console.log("welcome to traffic lights game")
+console.log("welcome to traffic lights game");
 
 
 let firstLight = document.getElementById("firstLight");
@@ -11,22 +11,22 @@ function redLight(){
 }
 
 function yellowLight(){
-    secondLight.classList.remove("black")
-    secondLight.classList.add("yellow")
+    secondLight.classList.remove("black");
+    secondLight.classList.add("yellow");
 }
 
 function greenLight(){
-    thirdLight.classList.remove("black")
-    thirdLight.classList.add("green")
+    thirdLight.classList.remove("black");
+    thirdLight.classList.add("green");
 }
 
 function blackLight(){
-    firstLight.classList.remove("red")
-    firstLight.classList.add("black")
+    firstLight.classList.remove("red");
+    firstLight.classList.add("black");
 
-    secondLight.classList.remove("yellow")
-    secondLight.classList.add("black")
+    secondLight.classList.remove("yellow");
+    secondLight.classList.add("black");
 
-    thirdLight.classList.remove("green")
-    thirdLight.classList.add("black")
+    thirdLight.classList.remove("green");
+    thirdLight.classList.add("black");
 }
