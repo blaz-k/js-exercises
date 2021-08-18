@@ -10,7 +10,7 @@
         let numArray = [];
 
         for (let i=0; numArray.length < howManyNumbers; i++){
-
+            let random = Math.floor(Math.random() * howManyNumbers);  //nevem kako zakljuciti ta del
         }
     })
 
