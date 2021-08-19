@@ -1,5 +1,7 @@
 console.log("Bitter")
 
+//GET:
+
 let container = document.getElementById("container")
 
 let xhttp = new XMLHttpRequest();
@@ -24,6 +26,8 @@ xhttp.onreadystatechange = function() {
 xhttp.open("GET", "http://localhost:5000/get-all-bitts", true);
 xhttp.send();
 
+//POST:
+
 let username = document.getElementById("username");
 let text = document.getElementById("text");
 let submit = document.getElementById("submit");
@@ -43,7 +47,15 @@ submit.addEventListener("click", function() {
     xhttp2.onload = function(){
         if (this.readyState === 4) {
             if (this.status === 200) {
-                console.log(xhttp2.responseText);
+                bitt = JSON.parse(xhttp.responseText);
+                let container = document.getElementById("container");
+
+                let bitElement = document.createElement("p");
+                bitElement.innerHTML = bitt.username + " " + bitt.created + " - " + bitt.text;
+                container.prepend(bitElement)
+
+                document.getElementById("submit").click();
+
             } else {
                 console.log("ERROR");
             }
