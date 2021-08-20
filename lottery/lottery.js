@@ -9,9 +9,14 @@
         let howManyNumbers = parseInt(document.getElementById("howManyNumbers").value);
         let numArray = [];
 
+
         for (let i=0; numArray.length < howManyNumbers; i++){
-            let random = Math.floor(Math.random() * howManyNumbers);  //nevem kako zakljuciti ta del
+            let random = Math.floor(Math.random() * 10);
+            numArray.push(random);
+
         }
+
+        console.log(numArray)
     })
 
 }())

@@ -54,7 +54,7 @@ submit.addEventListener("click", function() {
                 bitElement.innerHTML = bitt.username + " " + bitt.created + " - " + bitt.text;
                 container.prepend(bitElement)
 
-                document.getElementById("submit").click();
+                document.getElementById("bitElement").click();
 
             } else {
                 console.log("ERROR");
