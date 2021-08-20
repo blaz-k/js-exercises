@@ -11,7 +11,7 @@
 
 
         for (let i=0; numArray.length < howManyNumbers; i++){
-            let random = Math.floor(Math.random() * 10);
+            let random = Math.floor(Math.random() * (lastNumber- firstNumber + 1)) + firstNumber;
             numArray.push(random);
 
         }
