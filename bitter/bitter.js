@@ -27,6 +27,7 @@ function addNewBitt(){
     let message = document.getElementById("message").value;
 
     let jsonData = JSON.stringify({"username": user, "text": message});
+    console.log(jsonData);
 
     fetch("http://localhost:5000/create-bitt", {
         method: "post",
