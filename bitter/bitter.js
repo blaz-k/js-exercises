@@ -26,14 +26,14 @@ function addNewBitt(){
     let user = document.getElementById("username").value;
     let message = document.getElementById("message").value;
 
-    let data = JSON.stringify({"username": user, "text": message});
+    let jsonData = JSON.stringify({"username": user, "text": message});
 
     fetch("http://localhost:5000/create-bitt", {
         method: "post",
         headers: {
             "Content-Type": "application/json; charset=UTF-8"
         }
-        body: data
+        body: jsonData
     })
     .then(response => response.json())
     .then(function(bitt) {
@@ -47,5 +47,5 @@ function addNewBitt(){
     })
     .catch(function(error) {
         console.log("Request failed: " + error);
-    })
-}
+    });
+});
