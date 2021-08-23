@@ -1,4 +1,3 @@
-console.log("Bitter")
 
 let container = document.getElementById("container")
 
@@ -33,7 +32,7 @@ function addNewBitt(){
         method: "post",
         headers: {
             "Content-Type": "application/json; charset=UTF-8"
-        }
+        },
         body: jsonData
     })
     .then(response => response.json())
@@ -49,4 +48,4 @@ function addNewBitt(){
     .catch(function(error) {
         console.log("Request failed: " + error);
     });
-});
+};
