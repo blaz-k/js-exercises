@@ -1,74 +1,51 @@
 console.log("Bitter")
-
-//GET:
-
 let container = document.getElementById("container")
 
-let xhttp = new XMLHttpRequest();
+//GET:
+fetch("http://localhost:5000/get-all-bitts")
+.then(response => response.json())
+.then(function(bittObjects){
 
-xhttp.onreadystatechange = function() {
-    if (this.readyState === 4) {
-        if (this.status === 200) {
-            let bitts = JSON.parse(xhttp.responseText);
 
-            for ( let i of bitts){
-                let bitElement = document.createElement("p");
-                bitElement.innerHTML = i.username + " " + i.created + " - " + i.text;
-                container.appendChild(bitElement);
-            }
+    for(let bitt of bittObjects) {
+        let bittElement = document.createElement("p")
+        bittElement.innerHTML = bitt.username + " " + bitt.text;
 
-        } else {
-        console.log("error")
-        }
+        container.appendChild(bittElement);
     }
-};
+})
+.catch(function(error){
+    console.log("error");
 
-xhttp.open("GET", "http://localhost:5000/get-all-bitts", true);
-xhttp.send();
+})
 
 //POST:
 
-let username = document.getElementById("username");
-let text = document.getElementById("text");
-let submit = document.getElementById("submit");
-let jsonData;
+function addNewBitt(){
 
-let xhttp2 = new XMLHttpRequest();
+    let user = document.getElementById("user").value;
+    let message = document.getElementById("message").value;
 
+    let data = JSON.stringify({"username": user, "text": message});
 
-submit.addEventListener("click", function() {
-    console.log("CLICK")
-
-    let usernameText = {username: username.value, text: text.value}
-    console.log(usernameText)
-    jsonData = JSON.stringify(usernameText)
-
-
-    xhttp2.onload = function(){
-        if (this.readyState === 4) {
-            if (this.status === 200) {
-                bitt = JSON.parse(xhttp.responseText);
-                let container = document.getElementById("container");
-
-                let bitElement = document.createElement("p");
-                bitElement.innerHTML = bitt.username + " " + bitt.created + " - " + bitt.text;
-                container.prepend(bitElement)
-
-                document.getElementById("bitElement").click();
-
-            } else {
-                console.log("ERROR");
-            }
-
+    fetch("http://localhost:5000/create-bitt", {
+        method: "post",
+        headers: {
+            "Content-Type": "application/json; charset=UTF-8"
         }
+        body: data;
+    })
+    .then(response => response.json())
+    .then(function(bitt) {
+        let newBitt = document.createElement("p")
+        newBitt.innerHTML = bitt.username + " " + bitt.text
+        container.prepend(newBitt)
 
-    }
-    xhttp2.open("POST", "http://localhost:5000/create-bitt", true )
-    xhttp2.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    xhttp2.send(jsonData)
+        user.value = ""
+        msg.value = ""
 
-});
-
-
-
-
+    })
+    .catch(function(error) {
+        console.log("Request failed: " + error);
+    })
+}
