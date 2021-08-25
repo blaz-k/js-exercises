@@ -1,22 +1,44 @@
 
-let container = document.getElementById("container")
-
 //GET:
-fetch("http://localhost:5000/get-all-bitts")
-.then(response => response.json())
-.then(function(bittObjects){
+(function() {
+    let storedBitts = localStorage.bitts;
 
-    for(let bitt of bittObjects) {
-        let bittElement = document.createElement("p")
-        bittElement.innerHTML = bitt.username + " " + bitt.text;
+    if (storedBitts){
+        console.log("get bitts from localStorage")
+        let container = document.getElementById("container")
 
-        container.appendChild(bittElement);
+        let bittObjects = JSON.parse(storedBitts);
+
+        for(let bitt of bittObjects) {
+            let bittElement = document.createElement("p")
+            bittElement.innerHTML = bitt.username + " " + bitt.text;
+
+            container.appendChild(bittElement);
+        }
+
+    }else{
+        console.log("get bitts from server");
+            fetch("http://localhost:5000/get-all-bitts")
+                .then(response => response.json())
+                .then(function(bittObjects){
+
+                localStorage.bitt = JSON.stringify(bittObjects)
+
+                for(let bitt of bittObjects) {
+                    let bittElement = document.createElement("p")
+                    bittElement.innerHTML = bitt.username + " " + bitt.text;
+
+                    container.appendChild(bittElement);
+                    }
+                })
+                .catch(function(error){
+                    console.log("error");
+
+                });
+
     }
-})
-.catch(function(error){
-    console.log("error");
 
-})
+}())
 
 //POST:
 

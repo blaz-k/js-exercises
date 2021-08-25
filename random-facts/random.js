@@ -2,11 +2,11 @@ let container = document.getElementById("container");
 
 fetch("https://uselessfacts.jsph.pl/random.json?language=en")
 .then(response => response.json())
-.then(function(factObjects){
+.then(function(factObject){
+        console.log(factObject)
 
         let randomFact = document.createElement("p")
-        randomFact.innerHTML = factObjects.text
-        container.appendChild(randomFact);
+        randomFact.innerHTML = factObject.text
 
 })
 
