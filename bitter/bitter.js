@@ -1,44 +1,61 @@
 
 //GET:
-(function() {
-    let storedBitts = localStorage.bitts;
+(function () {
 
-    if (storedBitts){
-        console.log("get bitts from localStorage")
-        let container = document.getElementById("container")
+	function getBitts() {
+	    console.log("occurring every three minutes");
 
-        let bittObjects = JSON.parse(storedBitts);
+        // get bitts from storage
+	    let storedBittsRaw = localStorage.bitts;
 
-        for(let bitt of bittObjects) {
-            let bittElement = document.createElement("p")
-            bittElement.innerHTML = bitt.username + " " + bitt.text;
+	    let lastBittId = null;
+        let storedBitts = null;
 
-            container.appendChild(bittElement);
-        }
+	    if (storedBittsRaw) { // if there are any bitts in storage, get ID from the first one (the latest Bitt)
+	        storedBitts = JSON.parse(storedBittsRaw);
+            lastBittId = storedBitts[0].id;
+	    }
 
-    }else{
-        console.log("get bitts from server");
-            fetch("http://localhost:5000/get-all-bitts")
-                .then(response => response.json())
-                .then(function(bittObjects){
+	    fetch('http://localhost:5000//get-all-bitts?lastid='+lastBittId)
+            .then(function(response) {
+                return response.text();
+            })
+            .then(function(text) {
+                console.log(text);
 
-                localStorage.bitt = JSON.stringify(bittObjects)
+                let response = JSON.parse(text);
 
-                for(let bitt of bittObjects) {
-                    let bittElement = document.createElement("p")
-                    bittElement.innerHTML = bitt.username + " " + bitt.text;
+                // if browser storage is in sync with server database do this
+                if (response.synced) {
+                    console.log("Synced!");
+                } else { // if not, save the bitts in browser local storage
+                    localStorage.bitts = text;
+                    storedBitts = JSON.parse(text); // save the bitts also in the storedBitts variable
+                }
+
+                // show bitts in HTML
+                let container = document.getElementById("bittsContainer");
+                container.innerHTML = "";
+
+                for (let bitt of storedBitts) {
+                    let bittElement = document.createElement("p");
+                    bittElement.innerHTML = bitt.text + "<br> <small>" + bitt.username + "</small>";
 
                     container.appendChild(bittElement);
-                    }
-                })
-                .catch(function(error){
-                    console.log("error");
+                }
 
-                });
+            })
+            .catch(function(error) {
+                console.log('Request failed', error);
+            });
+	}
 
-    }
+	getBitts();  // initial run (before the interval)
+
+	setInterval(getBitts, 180*1000);  // 180 * 1000 miliseconds = 3 min
 
 }())
+
 
 //POST:
 
