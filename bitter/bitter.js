@@ -34,7 +34,7 @@
                 }
 
                 // show bitts in HTML
-                let container = document.getElementById("bittsContainer");
+                let container = document.getElementById("container");
                 container.innerHTML = "";
 
                 for (let bitt of storedBitts) {
